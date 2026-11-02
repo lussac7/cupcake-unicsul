@@ -356,14 +356,14 @@ src/main/resources/
 ├── application.yml
 └── db/
     └── migration/
-        └── V1__create_initial_schema.sql
+        └── V1__initial_schema.sql
 ```
 
 Estratégia inicial:
 
 | Versão | Arquivo | Responsabilidade |
 |---|---|---|
-| V1 | `V1__create_initial_schema.sql` | Criar `products`, `orders`, `order_items`, constraints e índices iniciais. |
+| V1 | `V1__initial_schema.sql` | Criar `products`, `orders`, `order_items`, constraints e índices iniciais. |
 
 Regras:
 
@@ -374,7 +374,7 @@ Regras:
 5. A aplicação deverá validar o mapeamento JPA em relação ao esquema existente.
 6. Migrações serão verificadas por testes de integração com PostgreSQL via Testcontainers na fase de testes.
 
-A migração `V1__create_initial_schema.sql` será efetivamente criada na Fase 8.
+A migração `V1__initial_schema.sql` será efetivamente criada na Fase 8.
 
 ## 10. Relação com os módulos da aplicação
 
