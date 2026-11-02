@@ -11,6 +11,8 @@ import io.github.lussac7.cupcake.product.entity.Product;
 import io.github.lussac7.cupcake.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -98,6 +100,12 @@ public class OrderService {
                 ));
 
         return toResponse(order);
+    }
+
+    public Page<OrderResponse> findAll(Pageable pageable) {
+
+        return orderRepository.findAll(pageable)
+                .map(this::toResponse);
     }
 
     private OrderResponse toResponse(Order order) {
