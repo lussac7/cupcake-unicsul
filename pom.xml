@@ -32,6 +32,12 @@
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
 
+        <!-- Validação de dados: Jakarta Bean Validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
         <!-- Persistência: Spring Data JPA e Hibernate -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -70,6 +76,7 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
