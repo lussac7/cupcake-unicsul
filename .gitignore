@@ -19,6 +19,5 @@ Thumbs.db
 
 # Meus scripts auxiliares
 scripts/
-
-# Minha instrução principal de IA
+*.puml
 MASTER_PROMPT_CUPCAKE_UNICSUL.md
