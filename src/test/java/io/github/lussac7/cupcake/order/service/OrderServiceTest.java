@@ -7,21 +7,22 @@ import io.github.lussac7.cupcake.order.entity.Order;
 import io.github.lussac7.cupcake.order.repository.OrderRepository;
 import io.github.lussac7.cupcake.product.entity.Product;
 import io.github.lussac7.cupcake.product.repository.ProductRepository;
+import io.github.lussac7.cupcake.shared.exception.BusinessRuleException;
+import io.github.lussac7.cupcake.shared.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.Mockito.lenient;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyIterable;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -105,7 +106,7 @@ class OrderServiceTest {
                 .thenReturn(List.of());
 
         assertThrows(
-                NoSuchElementException.class,
+                ResourceNotFoundException.class,
                 () -> orderService.create(request)
         );
 
@@ -129,7 +130,7 @@ class OrderServiceTest {
                 .thenReturn(List.of(product));
 
         assertThrows(
-                IllegalArgumentException.class,
+                BusinessRuleException.class,
                 () -> orderService.create(request)
         );
 
@@ -196,7 +197,7 @@ class OrderServiceTest {
                 .thenReturn(Optional.empty());
 
         assertThrows(
-                NoSuchElementException.class,
+                ResourceNotFoundException.class,
                 () -> orderService.findById(99L)
         );
     }

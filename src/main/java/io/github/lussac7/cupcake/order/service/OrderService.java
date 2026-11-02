@@ -9,15 +9,16 @@ import io.github.lussac7.cupcake.order.entity.OrderItem;
 import io.github.lussac7.cupcake.order.repository.OrderRepository;
 import io.github.lussac7.cupcake.product.entity.Product;
 import io.github.lussac7.cupcake.product.repository.ProductRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import io.github.lussac7.cupcake.shared.exception.BusinessRuleException;
+import io.github.lussac7.cupcake.shared.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -61,7 +62,7 @@ public class OrderService {
                 ));
 
         if (productsById.size() != requestedIds.size()) {
-            throw new NoSuchElementException(
+            throw new ResourceNotFoundException(
                     "One or more products were not found."
             );
         }
@@ -78,7 +79,7 @@ public class OrderService {
             Product product = productsById.get(entry.getKey());
 
             if (!product.isActive()) {
-                throw new IllegalArgumentException(
+                throw new BusinessRuleException(
                         "Inactive products cannot be ordered: "
                                 + product.getId()
                 );
@@ -95,7 +96,7 @@ public class OrderService {
     public OrderResponse findById(Long id) {
 
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(
+                .orElseThrow(() -> new ResourceNotFoundException(
                         "Order not found with id: " + id
                 ));
 

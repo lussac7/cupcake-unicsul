@@ -5,13 +5,13 @@ import io.github.lussac7.cupcake.product.dto.ProductResponse;
 import io.github.lussac7.cupcake.product.dto.ProductUpdateRequest;
 import io.github.lussac7.cupcake.product.entity.Product;
 import io.github.lussac7.cupcake.product.repository.ProductRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import io.github.lussac7.cupcake.shared.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,14 +32,7 @@ public class ProductService {
 
     public Page<ProductResponse> findAllActive(Pageable pageable) {
         return productRepository.findAllByActiveTrue(pageable)
-                .map(product -> new ProductResponse(
-                        product.getId(),
-                        product.getName(),
-                        product.getDescription(),
-                        product.getPrice(),
-                        product.getImageUrl(),
-                        product.isActive()
-                ));
+                .map(this::toResponse);
     }
 
     public ProductResponse findActiveById(Long id) {
@@ -92,7 +85,7 @@ public class ProductService {
 
     private Product getProductOrThrow(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(
+                .orElseThrow(() -> new ResourceNotFoundException(
                         "Product not found with id: " + id
                 ));
     }
@@ -101,7 +94,7 @@ public class ProductService {
         Product product = getProductOrThrow(id);
 
         if (!product.isActive()) {
-            throw new NoSuchElementException(
+            throw new ResourceNotFoundException(
                     "Active product not found with id: " + id
             );
         }

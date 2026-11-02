@@ -5,6 +5,7 @@ import io.github.lussac7.cupcake.product.dto.ProductResponse;
 import io.github.lussac7.cupcake.product.dto.ProductUpdateRequest;
 import io.github.lussac7.cupcake.product.entity.Product;
 import io.github.lussac7.cupcake.product.repository.ProductRepository;
+import io.github.lussac7.cupcake.shared.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -75,7 +75,7 @@ class ProductServiceTest {
                 .thenReturn(Optional.empty());
 
         assertThrows(
-                NoSuchElementException.class,
+                ResourceNotFoundException.class,
                 () -> productService.findActiveById(99L)
         );
     }
@@ -168,7 +168,7 @@ class ProductServiceTest {
         );
 
         assertThrows(
-                NoSuchElementException.class,
+                ResourceNotFoundException.class,
                 () -> productService.update(99L, request)
         );
     }
