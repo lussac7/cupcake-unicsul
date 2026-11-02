@@ -1,0 +1,18 @@
+# Configuração geral: define JPA com ddl-auto: validate e logging padrão INFO.
+
+spring:
+  application:
+    name: cupcake
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
+
+logging:
+  level:
+    root: INFO
+    io.github.lussac7.cupcake: INFO

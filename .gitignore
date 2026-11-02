@@ -1,0 +1,24 @@
+# Maven
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Segredos e configurações locais
+.env
+.env.*
+!.env.example
+
+# Meus scripts auxiliares
+scripts/
+
+# Minha instrução principal de IA
+MASTER_PROMPT_CUPCAKE_UNICSUL.md
