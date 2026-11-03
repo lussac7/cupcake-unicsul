@@ -14,6 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -227,5 +231,34 @@ class OrderServiceTest {
                 "Rua das Flores, 100",
                 items
         );
+    }
+
+    @Test
+    void shouldReturnPagedOrders() {
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Order order = new Order(
+                "Maria Silva",
+                "maria@example.com",
+                "Rua das Flores, 100"
+        );
+
+        order.addItem(
+                createProduct(1L, "Cupcake", "10.00", true),
+                2
+        );
+
+        Page<Order> orderPage = new PageImpl<>(
+                List.of(order),
+                pageable,
+                1
+        );
+
+        when(orderRepository.findAll(pageable)).thenReturn(orderPage);
+
+        Page<OrderResponse> result = orderService.findAll(pageable);
+
+        assertEquals(1, result.getTotalElements());
+        verify(orderRepository).findAll(pageable);
     }
 }

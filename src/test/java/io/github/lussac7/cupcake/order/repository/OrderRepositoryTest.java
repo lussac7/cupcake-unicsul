@@ -6,17 +6,15 @@ import io.github.lussac7.cupcake.product.entity.Product;
 import io.github.lussac7.cupcake.product.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@DataJpaTest
 @ActiveProfiles("test")
-@Transactional
 class OrderRepositoryTest {
 
     @Autowired
@@ -79,9 +77,30 @@ class OrderRepositoryTest {
                 "Rua das Flores, 100"
         );
 
-        assertThrows(
+        RuntimeException exception = assertThrows(
                 RuntimeException.class,
                 () -> orderRepository.saveAndFlush(order)
         );
+
+        assertTrue(
+                hasCause(exception, IllegalStateException.class)
+        );
+    }
+
+    private boolean hasCause(
+            Throwable exception,
+            Class<? extends Throwable> expectedType
+    ) {
+        Throwable current = exception;
+
+        while (current != null) {
+            if (expectedType.isInstance(current)) {
+                return true;
+            }
+
+            current = current.getCause();
+        }
+
+        return false;
     }
 }

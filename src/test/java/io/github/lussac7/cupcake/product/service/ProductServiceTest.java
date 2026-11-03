@@ -12,6 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -171,5 +175,68 @@ class ProductServiceTest {
                 ResourceNotFoundException.class,
                 () -> productService.update(99L, request)
         );
+    }
+
+    @Test
+    void shouldThrowExceptionWhenProductIsInactive() {
+        activeProduct.deactivate();
+
+        when(productRepository.findById(1L))
+                .thenReturn(Optional.of(activeProduct));
+
+        assertThrows(
+                ResourceNotFoundException.class,
+                () -> productService.findActiveById(1L)
+        );
+
+        verify(productRepository).findById(1L);
+    }
+
+    @Test
+    void shouldReturnPagedActiveProducts() {
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Page<Product> productPage = new PageImpl<>(
+                List.of(activeProduct),
+                pageable,
+                1
+        );
+
+        when(productRepository.findAllByActiveTrue(pageable))
+                .thenReturn(productPage);
+
+        Page<ProductResponse> result =
+                productService.findAllActive(pageable);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(activeProduct.getName(), result.getContent().getFirst().name());
+
+        verify(productRepository).findAllByActiveTrue(pageable);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenActivatingNonexistentProduct() {
+        when(productRepository.findById(99L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(
+                ResourceNotFoundException.class,
+                () -> productService.activate(99L)
+        );
+
+        verify(productRepository).findById(99L);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDeactivatingNonexistentProduct() {
+        when(productRepository.findById(99L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(
+                ResourceNotFoundException.class,
+                () -> productService.deactivate(99L)
+        );
+
+        verify(productRepository).findById(99L);
     }
 }

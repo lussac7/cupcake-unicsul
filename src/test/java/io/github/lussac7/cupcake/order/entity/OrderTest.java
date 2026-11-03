@@ -175,4 +175,17 @@ class OrderTest {
                 null
         );
     }
+
+    @Test
+    void shouldNormalizeCustomerDetails() {
+        Order order = new Order(
+                "  Maria Silva  ",
+                "  maria@example.com  ",
+                "  Rua das Flores, 100  "
+        );
+
+        assertEquals("Maria Silva", order.getCustomerName());
+        assertEquals("maria@example.com", order.getCustomerEmail());
+        assertEquals("Rua das Flores, 100", order.getDeliveryAddress());
+    }
 }

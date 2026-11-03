@@ -170,4 +170,24 @@ class OrderControllerTest {
                 pageable.getSort().getOrderFor("createdAt").getDirection()
         );
     }
+
+    @Test
+    void shouldRejectOrderWithInvalidItem() throws Exception {
+        mockMvc.perform(post("/api/v1/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                            {
+                                "customerName": "João Silva",
+                                "customerEmail": "joao@email.com",
+                                "deliveryAddress": "Rua das Flores, 100",
+                                "items": [
+                                    {
+                                        "productId": null,
+                                        "quantity": 0
+                                    }
+                                ]
+                            }
+                            """))
+                .andExpect(status().isBadRequest());
+    }
 }

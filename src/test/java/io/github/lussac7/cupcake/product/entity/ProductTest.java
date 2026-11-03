@@ -138,4 +138,39 @@ class ProductTest {
 
         assertTrue(product.isActive());
     }
+
+    @Test
+    void shouldRejectNullPrice() {
+        assertThrows(NullPointerException.class, () ->
+                new Product(
+                        "Cupcake",
+                        "Description",
+                        null,
+                        null
+                )
+        );
+    }
+
+    @Test
+    void shouldPreserveExistingDataWhenUpdateIsInvalid() {
+        Product product = new Product(
+                "Cupcake",
+                "Original description",
+                new BigDecimal("10.00"),
+                null
+        );
+
+        assertThrows(IllegalArgumentException.class, () ->
+                product.updateDetails(
+                        "Updated cupcake",
+                        "Updated description",
+                        BigDecimal.ZERO,
+                        null
+                )
+        );
+
+        assertEquals("Cupcake", product.getName());
+        assertEquals("Original description", product.getDescription());
+        assertEquals(new BigDecimal("10.00"), product.getPrice());
+    }
 }

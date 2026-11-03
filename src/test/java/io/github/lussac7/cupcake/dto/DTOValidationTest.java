@@ -127,4 +127,102 @@ class DTOValidationTest {
 
         assertFalse(validator.validate(request).isEmpty());
     }
+
+    @Test
+    void shouldRejectNullProductPrice() {
+        ProductCreateRequest request = new ProductCreateRequest(
+                "Cupcake de Chocolate",
+                "Cupcake com cobertura de chocolate.",
+                null,
+                null
+        );
+
+        assertFalse(validator.validate(request).isEmpty());
+    }
+
+    @Test
+    void shouldRejectProductPriceWithMoreThanTwoDecimalPlaces() {
+        ProductCreateRequest request = new ProductCreateRequest(
+                "Cupcake de Chocolate",
+                "Cupcake com cobertura de chocolate.",
+                new BigDecimal("12.999"),
+                null
+        );
+
+        assertFalse(validator.validate(request).isEmpty());
+    }
+
+    @Test
+    void shouldRejectProductNameExceedingMaximumLength() {
+        ProductCreateRequest request = new ProductCreateRequest(
+                "A".repeat(151),
+                "Descrição válida.",
+                new BigDecimal("12.50"),
+                null
+        );
+
+        assertFalse(validator.validate(request).isEmpty());
+    }
+
+    @Test
+    void shouldRejectImageUrlExceedingMaximumLength() {
+        ProductCreateRequest request = new ProductCreateRequest(
+                "Cupcake de Chocolate",
+                "Descrição válida.",
+                new BigDecimal("12.50"),
+                "https://example.com/" + "a".repeat(500)
+        );
+
+        assertFalse(validator.validate(request).isEmpty());
+    }
+
+    @Test
+    void shouldRejectCustomerNameExceedingMaximumLength() {
+        OrderCreateRequest request = new OrderCreateRequest(
+                "A".repeat(151),
+                "joao@example.com",
+                "Rua das Flores, 100",
+                List.of(new OrderItemRequest(1L, 1))
+        );
+
+        assertFalse(validator.validate(request).isEmpty());
+    }
+
+    @Test
+    void shouldRejectCustomerEmailExceedingMaximumLength() {
+        String email = "a".repeat(243) + "@example.com";
+
+        OrderCreateRequest request = new OrderCreateRequest(
+                "João Silva",
+                email,
+                "Rua das Flores, 100",
+                List.of(new OrderItemRequest(1L, 1))
+        );
+
+        assertFalse(validator.validate(request).isEmpty());
+    }
+
+    @Test
+    void shouldRejectNonPositiveProductId() {
+        OrderCreateRequest request = new OrderCreateRequest(
+                "João Silva",
+                "joao@example.com",
+                "Rua das Flores, 100",
+                List.of(new OrderItemRequest(0L, 1))
+        );
+
+        assertFalse(validator.validate(request).isEmpty());
+    }
+
+    @Test
+    void shouldRejectNegativeItemQuantity() {
+        OrderCreateRequest request = new OrderCreateRequest(
+                "João Silva",
+                "joao@example.com",
+                "Rua das Flores, 100",
+                List.of(new OrderItemRequest(1L, -1))
+        );
+
+        assertFalse(validator.validate(request).isEmpty());
+    }
 }

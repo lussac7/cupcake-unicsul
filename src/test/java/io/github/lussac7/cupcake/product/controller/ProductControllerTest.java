@@ -203,4 +203,19 @@ class ProductControllerTest {
                 pageable.getSort().getOrderFor("name").getDirection()
         );
     }
+
+    @Test
+    void shouldRejectInvalidProductUpdate() throws Exception {
+        mockMvc.perform(put("/api/v1/products/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                            {
+                                "name": "",
+                                "description": "",
+                                "price": 0
+                            }
+                            """))
+                .andExpect(status().isBadRequest());
+    }
+
 }
