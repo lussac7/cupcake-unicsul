@@ -173,4 +173,51 @@ class ProductTest {
         assertEquals("Original description", product.getDescription());
         assertEquals(new BigDecimal("10.00"), product.getPrice());
     }
+
+    @Test
+    void shouldNotModifyProductWhenUpdateDetailsReceivesInvalidData() {
+        Product product = new Product(
+                "Chocolate",
+                "Cupcake de chocolate",
+                new BigDecimal("8.50"),
+                null
+        );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> product.updateDetails(
+                        "Vanilla",
+                        "Cupcake de baunilha",
+                        BigDecimal.ZERO,
+                        null
+                )
+        );
+
+        assertEquals("Chocolate", product.getName());
+        assertEquals("Cupcake de chocolate", product.getDescription());
+        assertEquals(0, new BigDecimal("8.50").compareTo(product.getPrice()));
+    }
+
+    @Test
+    void shouldPreserveInactiveStatusWhenUpdatingProduct() {
+        Product product = new Product(
+                "Chocolate",
+                "Cupcake de chocolate",
+                new BigDecimal("8.50"),
+                null
+        );
+
+        product.deactivate();
+
+        product.updateDetails(
+                "Chocolate Premium",
+                "Cupcake premium de chocolate",
+                new BigDecimal("10.00"),
+                null
+        );
+
+        assertEquals("Chocolate Premium", product.getName());
+        assertEquals(0, new BigDecimal("10.00").compareTo(product.getPrice()));
+        assertFalse(product.isActive());
+    }
 }
