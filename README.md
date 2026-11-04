@@ -77,9 +77,7 @@ A aplicação utiliza DTOs na fronteira da API REST, evitando a exposição dire
 ```text
 cupcake-unicsul/
 ├── docs/
-│   ├── d01-requirements/
-│   ├── ...
-│   └── d16-documentation/
+│   └── uml/
 ├── src/
 │   ├── main/
 │   │   ├── java/
@@ -88,8 +86,7 @@ cupcake-unicsul/
 │       ├── java/
 │       └── resources/
 ├── pom.xml
-├── README.md
-└── LEIAME.md
+└── README.md
 ```
 
 ## 5. Pré-requisitos
@@ -193,20 +190,18 @@ Consulte a documentação da API para obter detalhes sobre requisições e respo
 A documentação técnica está organizada em:
 
 ```text
-docs/d16-documentation/
+docs/
 ```
 
 Documentos disponíveis:
 
 | Documento | Descrição |
 |---|---|
-| `architecture.md` | Arquitetura do sistema (inglês) |
-| `architecture-pt-br.md` | Arquitetura do sistema |
-| `api.md` | Documentação da API REST (inglês) |
-| `api-pt-br.md` | Documentação da API REST |
-| `database.md` | Documentação do banco de dados |
-| `development-setup.md` | Configuração do ambiente |
-| `testing.md` | Estratégia de testes |
+| `arquitetura.md` | Arquitetura do sistema |
+| `api.md` | Documentação da API REST |
+| `banco-de-dados.md` | Documentação do banco de dados |
+| `config-ambiente-desenvolvimento.md` | Configuração do ambiente |
+| `testes.md` | Estratégia de testes |
 
 As fases anteriores do projeto e os diagramas UML estão organizados nos respectivos diretórios de documentação.
 
@@ -228,3 +223,11 @@ A API não deve ser disponibilizada publicamente sem tratar as limitações de s
 ## 12. Projeto acadêmico
 
 Esta aplicação é um projeto acadêmico desenvolvido para aplicar conceitos de Engenharia de Software, incluindo análise de requisitos, modelagem UML, arquitetura de software, projeto de banco de dados, implementação e testes automatizados.
+
+
+## 👤 Author
+
+**Lussac Prestes Maia**
+
+- GitHub: [@lussac7](https://github.com/lussac7/task-manager)
+- LinkedIn: [Lussac P. Maia](https://linkedin.com/in/lussac-maia-eng-software)
