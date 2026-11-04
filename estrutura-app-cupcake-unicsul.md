@@ -2,13 +2,10 @@
 /projects/java/cupcake-unicsul
 ├── docs
 │   ├── api.md
-│   ├── architecture.md
-│   ├── database.md
-│   ├── development-setup.md
-│   ├── LEIAME.md
-│   ├── LEIAME.pdf
-│   ├── README.md
-│   ├── testing.md
+│   ├── arquitetura.md
+│   ├── banco-de-dados.md
+│   ├── config-ambiente-desenvolvimento.md
+│   ├── testes.md
 │   └── uml
 │       ├── 02-casos-de-uso.png
 │       ├── 03-arquitetura-camadas.png
@@ -47,6 +44,7 @@
 │           ├── formatters.js
 │           └── validators.js
 ├── pom.xml
+├── README.md
 └── src
     ├── main
     │   ├── java
@@ -133,5 +131,5 @@
         └── resources
             └── application-test.yml
 
-62 directories, 71 files
+62 directories, 69 files
 ```

@@ -78,6 +78,11 @@ A aplicação utiliza DTOs na fronteira da API REST, evitando a exposição dire
 cupcake-unicsul/
 ├── docs/
 │   └── uml/
+├── frontend/
+│   ├── assets/
+│   ├── css/
+│   ├── js/
+│   └── index.html
 ├── src/
 │   ├── main/
 │   │   ├── java/
