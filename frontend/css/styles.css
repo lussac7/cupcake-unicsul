@@ -1,0 +1,188 @@
+/* ==================================================
+   Cupcake - Global Styles
+   ================================================== */
+
+/* 1. Design tokens */
+
+:root {
+    /* Colors */
+    --color-primary: #d96c8a;
+    --color-primary-dark: #b94f70;
+    --color-secondary: #f7dce5;
+
+    --color-background: #fffaf8;
+    --color-surface: #ffffff;
+
+    --color-text: #333333;
+    --color-text-muted: #777777;
+
+    --color-border: #eadfe2;
+    --color-error: #c62828;
+    --color-success: #2e7d32;
+
+    /* Typography */
+    --font-family-base: Arial, Helvetica, sans-serif;
+
+    --font-size-small: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-heading: 1.75rem;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    /* Layout */
+    --content-max-width: 1200px;
+
+    /* Borders */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+
+    /* Effects */
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+
+/* 2. Global reset */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+
+/* 3. Typography */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: var(--font-size-heading);
+}
+
+p {
+    margin-top: 0;
+}
+
+a {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* 4. Form elements */
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+/* 5. Main application layout */
+
+#app-content {
+    width: min(100% - 2rem, var(--content-max-width));
+    min-height: 60vh;
+
+    margin-inline: auto;
+    padding-block: var(--spacing-xl);
+}
+
+#app-header,
+#app-footer {
+    width: 100%;
+}
+
+
+/* 6. Utility classes */
+
+.container {
+    width: min(100% - 2rem, var(--content-max-width));
+    margin-inline: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+.u-hidden {
+    display: none;
+}
+
+
+/* 7. Feedback messages */
+
+.message {
+    padding: var(--spacing-md);
+    margin-block: var(--spacing-md);
+
+    border-radius: var(--border-radius-md);
+}
+
+.message-error {
+    color: var(--color-error);
+    background-color: #ffebee;
+}
+
+.message-success {
+    color: var(--color-success);
+    background-color: #e8f5e9;
+}
+
+
+/* 8. Responsive adjustments */
+
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    #app-content {
+        width: min(100% - 1rem, var(--content-max-width));
+        padding-block: var(--spacing-lg);
+    }
+
+}

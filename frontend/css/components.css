@@ -1,0 +1,230 @@
+/* ==================================================
+   Cupcake - Component Styles
+   ================================================== */
+
+/* 1. Buttons */
+
+.btn {
+    display: inline-block;
+    padding: 0.65rem 1.25rem;
+
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-md);
+
+    font-weight: 600;
+    text-align: center;
+
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+    color: var(--color-surface);
+    background-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    text-decoration: none;
+}
+
+.btn-secondary {
+    color: var(--color-primary-dark);
+    background-color: var(--color-secondary);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* 2. Header */
+
+.app-header {
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--spacing-md);
+    padding-block: var(--spacing-md);
+}
+
+.header-logo {
+    color: var(--color-primary-dark);
+    font-size: var(--font-size-large);
+    font-weight: 700;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.header-nav a {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+
+/* 3. Footer */
+
+.app-footer {
+    margin-top: var(--spacing-xl);
+    padding-block: var(--spacing-lg);
+
+    color: var(--color-text-muted);
+    background-color: var(--color-surface);
+
+    text-align: center;
+}
+
+
+/* 4. Product cards */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.product-card {
+    overflow: hidden;
+
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.product-card-image {
+    width: 100%;
+    height: 200px;
+
+    object-fit: cover;
+}
+
+.product-card-content {
+    padding: var(--spacing-md);
+}
+
+.product-card-title {
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-large);
+}
+
+.product-card-price {
+    margin-bottom: var(--spacing-md);
+
+    color: var(--color-primary-dark);
+    font-size: var(--font-size-large);
+    font-weight: 700;
+}
+
+
+/* 5. Forms */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+
+    margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+
+    background-color: var(--color-surface);
+}
+
+.form-control:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+}
+
+
+/* 6. Pagination */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: var(--spacing-sm);
+    margin-block: var(--spacing-xl);
+}
+
+.pagination button {
+    min-width: 2.5rem;
+    padding: var(--spacing-sm);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+
+    background-color: var(--color-surface);
+}
+
+.pagination button.active {
+    color: var(--color-surface);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+
+/* 7. Cart summary */
+
+.cart-summary {
+    padding: var(--spacing-lg);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.cart-summary-total {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+
+    border-top: 1px solid var(--color-border);
+
+    font-size: var(--font-size-large);
+    font-weight: 700;
+}
+
+
+/* 8. Responsive adjustments */
+
+@media (max-width: 600px) {
+
+    .header-content {
+        flex-direction: column;
+    }
+
+    .header-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--spacing-md);
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
