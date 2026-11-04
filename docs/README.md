@@ -1,38 +1,38 @@
 # Cupcake
 
-Academic web application for a cupcake store, developed as part of a Software Engineering project at UNICSUL.
+Aplicação web acadêmica para uma loja de cupcakes, desenvolvida como parte de um projeto de Engenharia de Software na Universidade Cruzeiro do Sul (UNICSUL), na disciplina PIT-II.
 
-The project provides a REST API for product and order management, using Java 21, Spring Boot 4.1.2, and PostgreSQL.
+O projeto disponibiliza uma API REST para gerenciamento de produtos e pedidos, utilizando Java 21, Spring Boot 4.1.2 e PostgreSQL.
 
-## 1. Technologies
+## 1. Tecnologias
 
-| Technology | Purpose |
+| Tecnologia | Finalidade |
 |---|---|
-| Java 21 | Programming language |
-| Spring Boot 4.1.2 | Application framework |
-| Spring Web MVC | REST API |
-| Spring Data JPA | Data persistence |
-| Hibernate | Object-relational mapping |
-| PostgreSQL | Main database |
-| Flyway | Database migrations |
-| Maven | Build and dependency management |
-| JUnit 5 | Automated testing |
-| Mockito | Unit test dependency isolation |
-| Testcontainers | PostgreSQL integration testing |
-| H2 | In-memory testing database |
-| Git | Version control |
+| Java 21 | Linguagem de programação |
+| Spring Boot 4.1.2 | Framework da aplicação |
+| Spring Web MVC | API REST |
+| Spring Data JPA | Persistência de dados |
+| Hibernate | Mapeamento objeto-relacional |
+| PostgreSQL | Banco de dados principal |
+| Flyway | Migrações do banco de dados |
+| Maven | Construção e gerenciamento de dependências |
+| JUnit 5 | Testes automatizados |
+| Mockito | Isolamento de dependências nos testes |
+| Testcontainers | Testes de integração com PostgreSQL |
+| H2 | Banco de dados em memória para testes |
+| Git | Controle de versão |
 
-## 2. Architecture
+## 2. Arquitetura
 
-The application follows a **Modular Monolith + Layered Architecture**.
+A aplicação utiliza uma arquitetura de **Monólito Modular (Modular Monolith) combinada com Arquitetura em Camadas (Layered Architecture)**.
 
-The source code is organized into three main modules:
+O código-fonte está organizado em três módulos principais:
 
-- `product` — product management.
-- `order` — order management.
-- `shared` — shared components, including exception handling.
+- `product` — gerenciamento de produtos.
+- `order` — gerenciamento de pedidos.
+- `shared` — componentes compartilhados, incluindo tratamento de exceções.
 
-Each functional module separates responsibilities into:
+Cada módulo funcional separa suas responsabilidades em:
 
 - Controller
 - DTO
@@ -40,38 +40,39 @@ Each functional module separates responsibilities into:
 - Repository
 - Service
 
-The application uses DTOs at REST API boundaries and does not expose JPA entities directly.
+A aplicação utiliza DTOs na fronteira da API REST, evitando a exposição direta das entidades JPA.
 
-## 3. Implemented Features
+## 3. Funcionalidades implementadas
 
-### Products
+### Produtos
 
-- Create products.
-- Retrieve active products.
-- Retrieve a product by ID.
-- Update product information.
-- Deactivate products.
-- Paginated product listing.
-- Product sorting.
+- Cadastro de produtos.
+- Consulta de produtos ativos.
+- Consulta de produto por identificador.
+- Atualização de informações.
+- Desativação de produtos.
+- Listagem paginada.
+- Ordenação dos resultados.
 
-### Orders
+### Pedidos
 
-- Create orders.
-- Retrieve an order by ID.
-- Paginated order listing.
-- Calculate item subtotals and order totals.
-- Preserve product names and unit prices at purchase time.
-- Consolidate repeated product IDs in an order request.
+- Criação de pedidos.
+- Consulta de pedido por identificador.
+- Listagem paginada de pedidos.
+- Cálculo dos subtotais dos itens.
+- Cálculo do valor total do pedido.
+- Preservação dos nomes e preços dos produtos no momento da compra.
+- Consolidação de identificadores repetidos de produtos em uma requisição.
 
-### Error Handling
+### Tratamento de erros
 
-- Centralized exception handling.
-- HTTP Problem Details responses.
-- Request validation.
-- Resource-not-found handling.
-- Business-rule violation handling.
+- Tratamento centralizado de exceções.
+- Respostas HTTP utilizando Problem Details.
+- Validação das requisições.
+- Tratamento de recursos não encontrados.
+- Tratamento de violações de regras de negócio.
 
-## 4. Project Structure
+## 4. Estrutura do projeto
 
 ```text
 cupcake-unicsul/
@@ -91,135 +92,139 @@ cupcake-unicsul/
 └── LEIAME.md
 ```
 
-## 5. Prerequisites
+## 5. Pré-requisitos
 
-To run the application locally, you need:
+Para executar a aplicação localmente, são necessários:
 
-- Java 21 JDK.
+- JDK Java 21.
 - Maven.
 - PostgreSQL.
-- Docker for integration tests using Testcontainers.
+- Docker para os testes de integração que utilizam Testcontainers.
 
-## 6. Database Configuration
+## 6. Configuração do banco de dados
 
-The development profile uses PostgreSQL.
+O perfil de desenvolvimento utiliza PostgreSQL.
 
-Default connection:
+Endereço padrão:
 
 ```text
 jdbc:postgresql://localhost:5432/cupcake
 ```
 
-Configure the following environment variables:
+Configure as seguintes variáveis de ambiente:
 
 ```bash
 export DB_USERNAME=cupcake_user
-export DB_PASSWORD='your_password'
+export DB_PASSWORD='sua_senha'
 ```
 
-Create the database and configure the PostgreSQL user before starting the application.
+Crie o banco de dados e configure o usuário PostgreSQL antes de iniciar a aplicação.
 
-Flyway automatically manages database migrations during application startup.
+O Flyway gerencia automaticamente as migrações pendentes durante a inicialização.
 
-## 7. Running the Application
+## 7. Executando a aplicação
 
-Start the application using the development profile:
+Inicie a aplicação utilizando o perfil de desenvolvimento:
 
 ```bash
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
-Alternatively, build the executable JAR:
+Como alternativa, gere o arquivo JAR executável:
 
 ```bash
 mvn clean package
 ```
 
-Run the generated artifact:
+Execute o artefato gerado:
 
 ```bash
 java -jar target/cupcake-0.0.1-SNAPSHOT.jar \
     --spring.profiles.active=dev
 ```
 
-## 8. Running Tests
+## 8. Executando os testes
 
-Execute the complete test suite:
+Execute toda a suíte de testes:
 
 ```bash
 mvn clean test
 ```
 
-Run a specific test class:
+Execute uma classe específica:
 
 ```bash
 mvn test -Dtest=ProductTest
 ```
 
-Integration tests using Testcontainers require Docker to be available.
+Os testes de integração que utilizam Testcontainers exigem que o Docker esteja disponível.
 
-Test execution reports are generated under:
+Os relatórios de execução são gerados em:
 
 ```text
 target/surefire-reports/
 ```
 
-## 9. REST API
+## 9. API REST
 
-The API base path is:
+O caminho-base da API é:
 
 ```text
 /api/v1
 ```
 
-Main resources:
+Principais recursos:
 
-| HTTP Method | Endpoint | Description |
+| Método HTTP | Endpoint | Descrição |
 |---|---|---|
-| GET | `/products` | List active products |
-| GET | `/products/{id}` | Retrieve a product |
-| POST | `/products` | Create a product |
-| PUT | `/products/{id}` | Update a product |
-| DELETE | `/products/{id}` | Deactivate a product |
-| GET | `/orders` | List orders |
-| GET | `/orders/{id}` | Retrieve an order |
-| POST | `/orders` | Create an order |
+| GET | `/products` | Listar produtos ativos |
+| GET | `/products/{id}` | Consultar um produto |
+| POST | `/products` | Cadastrar um produto |
+| PUT | `/products/{id}` | Atualizar um produto |
+| DELETE | `/products/{id}` | Desativar um produto |
+| GET | `/orders` | Listar pedidos |
+| GET | `/orders/{id}` | Consultar um pedido |
+| POST | `/orders` | Criar um pedido |
 
-For request and response details, see the API documentation.
+Consulte a documentação da API para obter detalhes sobre requisições e respostas.
 
-## 10. Documentation
+## 10. Documentação
 
-Technical documentation is maintained under `docs/d16-documentation/`.
+A documentação técnica está organizada em:
 
-Available documents:
+```text
+docs/d16-documentation/
+```
 
-| Document | Description |
+Documentos disponíveis:
+
+| Documento | Descrição |
 |---|---|
-| `architecture.md` | System architecture (English) |
+| `architecture.md` | Arquitetura do sistema (inglês) |
 | `architecture-pt-br.md` | Arquitetura do sistema |
-| `api.md` | REST API documentation (English) |
+| `api.md` | Documentação da API REST (inglês) |
 | `api-pt-br.md` | Documentação da API REST |
 | `database.md` | Documentação do banco de dados |
 | `development-setup.md` | Configuração do ambiente |
 | `testing.md` | Estratégia de testes |
 
-Earlier project phases and UML diagrams are maintained under the corresponding documentation directories.
+As fases anteriores do projeto e os diagramas UML estão organizados nos respectivos diretórios de documentação.
 
-## 11. Current Limitations
+## 11. Limitações atuais
 
-The current implementation does not include:
+A implementação atual não contempla:
 
-- User authentication or authorization.
-- Payment integration.
-- Image upload.
-- Persistent shopping cart.
-- Order status management.
-- Order cancellation.
-- Frontend implementation.
-- Order ownership verification.
+- Autenticação ou autorização de usuários.
+- Integração com serviços de pagamento.
+- Upload de imagens.
+- Carrinho de compras persistente.
+- Gerenciamento de status dos pedidos.
+- Cancelamento de pedidos.
+- Implementação do frontend.
+- Verificação da titularidade dos pedidos.
 
-The API should not be exposed publicly without addressing the relevant security limitations, particularly access to customer information through order endpoints.
+A API não deve ser disponibilizada publicamente sem tratar as limitações de segurança existentes, especialmente o acesso a informações dos clientes pelos endpoints de consulta de pedidos.
 
-## 12. Academic Project
+## 12. Projeto acadêmico
 
-This application is an academic project developed to apply Software Engineering concepts, including requirements analysis, UML modeling, software architecture, database design, implementation, and automated testing.
+Esta aplicação é um projeto acadêmico desenvolvido para aplicar conceitos de Engenharia de Software, incluindo análise de requisitos, modelagem UML, arquitetura de software, projeto de banco de dados, implementação e testes automatizados.
