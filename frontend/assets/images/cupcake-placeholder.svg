@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="400"
+     height="300"
+     viewBox="0 0 400 300">
+
+    <rect width="400" height="300" fill="#fff4ec"/>
+
+    <path d="M145 130 L255 130 L240 235 L160 235 Z"
+          fill="#e9a3b5"/>
+
+    <path d="M145 130
+             C125 115 145 85 175 100
+             C175 65 225 65 225 100
+             C255 85 275 115 255 130 Z"
+          fill="#f5c2d0"/>
+
+    <path d="M160 235 L240 235 L230 250 L170 250 Z"
+          fill="#d98ca3"/>
+
+    <circle cx="200" cy="90" r="8" fill="#d94f70"/>
+
+    <text x="200"
+          y="280"
+          text-anchor="middle"
+          font-family="Arial, sans-serif"
+          font-size="14"
+          fill="#80505d">
+        Cupcake
+    </text>
+</svg>
