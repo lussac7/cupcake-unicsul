@@ -272,6 +272,13 @@ A API não deve ser disponibilizada publicamente sem tratar as limitações de s
 
 Esta aplicação é um projeto acadêmico desenvolvido para aplicar conceitos de Engenharia de Software, incluindo análise de requisitos, modelagem UML, arquitetura de software, projeto de banco de dados, implementação de backend e frontend e testes automatizados.
 
+## 🎬 Demonstração do Projeto
+
+Clique na imagem abaixo para assistir ao vídeo de demonstração do frontend 
+Cupcake-Unicsul:
+
+[![Demonstração do Cupcake-Unicsul](docs/images/screenshot-cupcake-svga.png)](https://drive.google.com/file/d/1HkofTEY-C1rFG3vitykqa6jyENo43o3R/view?usp=sharing)
+
 ## 👤 Author
 
 **Lussac Prestes Maia**

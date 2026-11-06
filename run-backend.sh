@@ -17,15 +17,15 @@ export SPRING_PROFILES_ACTIVE=dev
 
 cd /projects/java/cupcake-unicsul
 
-# ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 
 # ou se compilado em jar (./mvnw clean compile), use:
 
-if [ ! -f target/cupcake-0.0.1-SNAPSHOT.jar ]; then
-  ./mvnw clean compile
-fi
-
-java -jar target/cupcake-0.0.1-SNAPSHOT.jar
+#if [ ! -f target/cupcake-0.0.1-SNAPSHOT.jar ]; then
+#  ./mvnw clean compile
+#fi
+#
+#java -jar target/cupcake-0.0.1-SNAPSHOT.jar
 # java -jar target/cupcake-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev
 
 # # RUN FRONTEND
