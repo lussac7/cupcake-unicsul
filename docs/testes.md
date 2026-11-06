@@ -8,7 +8,7 @@ A estratégia prioriza a confiabilidade funcional e a verificação das regras d
 
 As principais ferramentas utilizadas são:
 
-- JUnit 5;
+- JUnit 6;
 - Mockito;
 - Spring Boot Test;
 - Spring Data JPA Test;
@@ -45,7 +45,7 @@ São utilizados principalmente para validar:
 - Tratamento de condições inválidas.
 - Comportamentos específicos dos métodos.
 
-O JUnit 5 é utilizado para estruturar e executar os testes.
+O JUnit 6 é utilizado para estruturar e executar os testes.
 
 ### 3.2 Testes de serviços
 
@@ -213,7 +213,7 @@ Os quatro testes foram executados individualmente com sucesso.
 Posteriormente, o usuário executou:
 
 ```bash
-mvn clean test
+./mvnw clean test
 ```
 
 O resultado foi confirmado como bem-sucedido.
@@ -257,7 +257,7 @@ A execução dos testes é realizada pelo Maven.
 ### 9.1 Executar todos os testes
 
 ```bash
-mvn clean test
+./mvnw clean test
 ```
 
 Remove os arquivos de compilação anteriores e executa a suíte de testes.
@@ -265,7 +265,7 @@ Remove os arquivos de compilação anteriores e executa a suíte de testes.
 ### 9.2 Executar testes sem limpar o projeto
 
 ```bash
-mvn test
+./mvnw test
 ```
 
 Executa os testes sem remover previamente os arquivos de compilação.
@@ -275,7 +275,7 @@ Executa os testes sem remover previamente os arquivos de compilação.
 Exemplo:
 
 ```bash
-mvn test -Dtest=ProductTest
+./mvnw test -Dtest=ProductTest
 ```
 
 ### 9.4 Executar vários testes específicos
@@ -283,7 +283,7 @@ mvn test -Dtest=ProductTest
 Exemplo:
 
 ```bash
-mvn test -Dtest=ProductTest,ProductRepositoryTest
+./mvnw test -Dtest=ProductTest,ProductRepositoryTest
 ```
 
 ### 9.5 Executar os testes de integração
@@ -291,7 +291,7 @@ mvn test -Dtest=ProductTest,ProductRepositoryTest
 Para executar uma classe específica de integração:
 
 ```bash
-mvn test -Dtest=PostgreSqlIntegrationTest
+./mvnw test -Dtest=PostgreSqlIntegrationTest
 ```
 
 A execução dos testes que utilizam Testcontainers exige um ambiente Docker funcional.

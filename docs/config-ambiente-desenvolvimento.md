@@ -15,7 +15,7 @@ Antes de executar a aplicação, verifique se os seguintes componentes estão di
 | Componente | Versão ou requisito |
 |---|---|
 | Java Development Kit | Java 21 |
-| Maven | Compatível com o projeto |
+| Maven Wrapper | Incluído no repositório |
 | PostgreSQL | Instalado e em execução |
 | Git | Instalado |
 | Docker | Necessário para os testes de integração com Testcontainers |
@@ -73,7 +73,7 @@ javac -version
 Verifique a instalação do Maven:
 
 ```bash
-mvn -version
+./mvnw  -version
 ```
 
 Confirme que o Maven está utilizando Java 21.
@@ -119,14 +119,21 @@ A senha será solicitada pelo cliente PostgreSQL.
 
 ## 6. Configurar variáveis de ambiente
 
-O perfil `dev` utiliza variáveis de ambiente para obter as credenciais do banco de dados.
+O perfil `dev` utiliza variáveis de ambiente para configurar a conexão com o banco de dados.
 
-Variáveis necessárias:
+Variáveis utilizadas:
 
-| Variável | Descrição |
-|---|---|
-| `DB_USERNAME` | Usuário do PostgreSQL |
-| `DB_PASSWORD` | Senha do PostgreSQL |
+| Variável | Descrição | Obrigatoriedade |
+|---|---|---|
+| `DB_URL` | URL de conexão com PostgreSQL | Opcional |
+| `DB_USERNAME` | Usuário do PostgreSQL | Obrigatória |
+| `DB_PASSWORD` | Senha do PostgreSQL | Obrigatória |
+
+Quando `DB_URL` não estiver definida, a aplicação utilizará a seguinte URL padrão:
+
+```text
+jdbc:postgresql://localhost:5432/cupcake
+```
 
 Exemplo para uma sessão do terminal:
 
@@ -135,9 +142,16 @@ export DB_USERNAME=cupcake_user
 export DB_PASSWORD='change_this_password'
 ```
 
+Se necessário, configure uma URL diferente:
+
+```bash
+export DB_URL=jdbc:postgresql://localhost:5432/cupcake
+```
+
 Verifique se as variáveis foram configuradas:
 
 ```bash
+printenv DB_URL
 printenv DB_USERNAME
 ```
 
@@ -213,7 +227,7 @@ Configura:
 Depois de configurar o PostgreSQL e as variáveis de ambiente, execute:
 
 ```bash
-mvn spring-boot:run -Dspring-boot.run.profiles=dev
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 O Spring Boot iniciará a aplicação utilizando o perfil `dev`.
@@ -229,7 +243,7 @@ Verifique os logs para confirmar que a aplicação iniciou corretamente.
 Para compilar o código-fonte:
 
 ```bash
-mvn clean compile
+./mvnw clean compile
 ```
 
 Esse comando remove os arquivos de compilação anteriores e compila o projeto.
@@ -239,7 +253,7 @@ Esse comando remove os arquivos de compilação anteriores e compila o projeto.
 Para executar todos os testes automatizados:
 
 ```bash
-mvn clean test
+./mvnw clean test
 ```
 
 Os testes utilizam as configurações apropriadas para cada tipo de teste.
@@ -265,7 +279,7 @@ Não é necessário configurar manualmente um banco PostgreSQL adicional para es
 Para gerar o artefato executável:
 
 ```bash
-mvn clean package
+./mvnw clean package
 ```
 
 O Maven executará as etapas de compilação, testes e empacotamento.

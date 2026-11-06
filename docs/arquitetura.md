@@ -10,18 +10,32 @@ A aplicação é organizada em módulos funcionais, com responsabilidades separa
 
 ### Tecnologias principais
 
+**Backend**
+
 - Java 21
 - Spring Boot 4.1.2
-- Maven
+- Maven Wrapper
 - Spring Web MVC
 - Spring Data JPA
 - Hibernate
 - PostgreSQL
 - Flyway
-- JUnit 5
+- JUnit 6
 - Mockito
 - Testcontainers
 - H2 para testes
+
+**Frontend**
+
+- HTML5
+- CSS3
+- JavaScript puro (Vanilla JavaScript)
+- JavaScript ES Modules
+- Fetch API
+- localStorage
+
+**Controle de versão**
+
 - Git
 
 ## 2. Estilo arquitetural
@@ -264,15 +278,94 @@ O projeto utiliza diferentes níveis de testes:
 
 O objetivo é verificar o comportamento dos componentes isoladamente e a integração entre as partes da aplicação.
 
-## 11. Estado atual do frontend
+## 11. Arquitetura do frontend
 
-O frontend ainda não está implementado.
+O projeto possui um frontend independente, desenvolvido com HTML5, CSS3 e JavaScript puro (Vanilla JavaScript), organizado em módulos ES.
 
-Atualmente, o projeto disponibiliza um backend com API REST.
+O frontend é responsável pela interface de interação com o usuário e consome os serviços disponibilizados pela API REST do backend.
 
-Não existem, nesta versão, páginas HTML, folhas de estilo CSS ou módulos JavaScript implementados.
+### 11.1 Organização dos arquivos
 
-A arquitetura atual permite que um frontend independente seja desenvolvido posteriormente e consuma os endpoints REST.
+O código-fonte está organizado nos seguintes diretórios:
+
+```text
+frontend/
+├── assets/
+│   └── images/
+├── css/
+│   ├── components.css
+│   └── styles.css
+├── js/
+│   ├── api/
+│   │   ├── http-client.js
+│   │   ├── order-api.js
+│   │   └── product-api.js
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   ├── utils/
+│   └── app.js
+└── index.html
+```
+
+Responsabilidades principais:
+
+- `api`: comunicação HTTP com o backend.
+- `components`: componentes reutilizáveis da interface.
+- `pages`: implementação das páginas da aplicação.
+- `services`: serviços utilizados pelo frontend, incluindo gerenciamento do carrinho.
+- `utils`: funções auxiliares e validações.
+- `app.js`: inicialização e gerenciamento da navegação.
+- `css`: estilos gerais e componentes visuais.
+- `assets`: imagens e demais recursos estáticos.
+
+### 11.2 Navegação
+
+A aplicação utiliza rotas Hash para navegação entre as páginas.
+
+As rotas implementadas são:
+
+| Rota | Funcionalidade |
+|---|---|
+| `#/products` | Catálogo de produtos |
+| `#/products/{id}` | Detalhes do produto |
+| `#/cart` | Carrinho de compras |
+| `#/checkout` | Finalização do pedido |
+| `#/orders/{id}` | Consulta do pedido |
+
+O carregamento das páginas utiliza importação dinâmica de módulos JavaScript (`import()`).
+
+### 11.3 Comunicação com o backend
+
+A comunicação ocorre por meio da Fetch API, utilizando os módulos responsáveis pelo acesso aos recursos de produtos e pedidos.
+
+O backend disponibiliza a API REST na porta `8080`.
+
+O frontend é servido independentemente, na porta `5500`, conforme a configuração CORS do backend.
+
+### 11.4 Gerenciamento do carrinho
+
+O carrinho de compras é gerenciado pelo serviço `cart-service.js`.
+
+Os dados são armazenados no `localStorage` do navegador, utilizando a chave:
+
+```text
+cupcake.cart
+```
+
+O armazenamento local mantém os identificadores dos produtos e suas quantidades.
+
+Os valores monetários são obtidos e calculados pelo backend durante a criação do pedido, que permanece como fonte da verdade para os preços e totais.
+
+### 11.5 Responsabilidades arquiteturais
+
+O frontend e o backend possuem responsabilidades separadas:
+
+- O frontend gerencia a apresentação, a navegação e a interação com o usuário.
+- O backend executa as regras de negócio, valida os pedidos e calcula os valores financeiros.
+- A API REST estabelece o contrato de comunicação entre as duas partes.
+
+Essa separação permite que a interface evolua independentemente da implementação interna do backend.
 
 ## 12. Limitações atuais
 
@@ -283,8 +376,8 @@ A implementação atual possui as seguintes limitações funcionais:
 - Não existe integração com serviços de pagamento.
 - Não existe upload de imagens.
 - Não existe gerenciamento de status ou cancelamento de pedidos.
-- Não existe frontend implementado.
 - Não existe controle de titularidade no acesso aos pedidos.
+- O carrinho de compras é armazenado localmente no navegador, sem persistência no backend.
 
 Em particular, os endpoints de consulta de pedidos retornam dados do cliente, incluindo e-mail e endereço, sem verificar a identidade ou a titularidade da requisição. Isso deve ser considerado antes de disponibilizar a aplicação em um ambiente público de produção.
 

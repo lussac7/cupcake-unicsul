@@ -384,15 +384,58 @@ Essas limitações precisam ser consideradas antes de disponibilizar a API publi
 
 ## 7. Integração com o frontend
 
-O backend disponibiliza endpoints REST que poderão ser consumidos por um frontend independente.
+O projeto possui um frontend independente, desenvolvido com HTML5, CSS3 e JavaScript puro (Vanilla JavaScript), organizado em módulos ES.
 
-A comunicação poderá utilizar a Fetch API do JavaScript.
+A comunicação entre frontend e backend ocorre por meio da API REST, utilizando a Fetch API do JavaScript.
 
-O frontend deverá enviar os identificadores dos produtos e suas quantidades ao criar um pedido.
+### 7.1 Funcionalidades integradas
 
-Os valores financeiros deverão ser calculados e validados pelo backend, que utiliza os preços armazenados no banco de dados.
+O frontend disponibiliza as seguintes funcionalidades:
 
-O frontend ainda não está implementado nesta versão do projeto.
+- Consulta e exibição do catálogo de produtos.
+- Consulta dos detalhes de um produto.
+- Gerenciamento do carrinho de compras.
+- Atualização das quantidades e remoção de itens.
+- Checkout e criação de pedidos.
+- Consulta de pedidos por identificador.
+
+### 7.2 Navegação
+
+A navegação utiliza rotas Hash no navegador:
+
+| Rota | Funcionalidade |
+|---|---|
+| `#/products` | Catálogo de produtos |
+| `#/products/{id}` | Detalhes do produto |
+| `#/cart` | Carrinho de compras |
+| `#/checkout` | Finalização do pedido |
+| `#/orders/{id}` | Consulta do pedido |
+
+### 7.3 Carrinho de compras
+
+Os dados do carrinho são armazenados localmente no navegador por meio de `localStorage`, utilizando a chave `cupcake.cart`.
+
+O carrinho mantém os identificadores dos produtos e suas quantidades. Os preços e valores totais não são considerados confiáveis quando armazenados no navegador.
+
+### 7.4 Responsabilidade pelo cálculo dos valores
+
+O frontend envia ao backend os identificadores dos produtos e suas respectivas quantidades durante a criação do pedido.
+
+O backend permanece como fonte da verdade para os valores financeiros, consultando os preços armazenados no banco de dados e calculando os subtotais e o total do pedido.
+
+Produtos inexistentes ou inativos não podem ser incluídos em novos pedidos.
+
+### 7.5 Configuração de comunicação
+
+O backend disponibiliza a API na porta `8080`.
+
+O frontend é uma aplicação estática independente, servida por um servidor HTTP na porta `5500`.
+
+A configuração CORS do backend permite requisições originadas de:
+
+```text
+http://localhost:5500
+```
 
 ## 8. Funcionalidades não disponíveis
 

@@ -2,7 +2,7 @@
 
 Aplicação web acadêmica para uma loja de cupcakes, desenvolvida como parte de um projeto de Engenharia de Software na Universidade Cruzeiro do Sul (UNICSUL), na disciplina PIT-II.
 
-O projeto disponibiliza uma API REST para gerenciamento de produtos e pedidos, utilizando Java 21, Spring Boot 4.1.2 e PostgreSQL.
+O projeto disponibiliza uma API REST e uma interface web para gerenciamento de produtos e pedidos, utilizando Java 21, Spring Boot 4.1.2 e PostgreSQL.
 
 ## 1. Tecnologias
 
@@ -15,18 +15,20 @@ O projeto disponibiliza uma API REST para gerenciamento de produtos e pedidos, u
 | Hibernate | Mapeamento objeto-relacional |
 | PostgreSQL | Banco de dados principal |
 | Flyway | Migrações do banco de dados |
-| Maven | Construção e gerenciamento de dependências |
-| JUnit 5 | Testes automatizados |
+| Maven Wrapper | Construção e gerenciamento de dependências |
+| JUnit 6 | Testes automatizados |
 | Mockito | Isolamento de dependências nos testes |
 | Testcontainers | Testes de integração com PostgreSQL |
 | H2 | Banco de dados em memória para testes |
+| HTML5 e CSS3 | Estrutura e apresentação do frontend |
+| JavaScript ES Modules | Comportamento e organização do frontend |
 | Git | Controle de versão |
 
 ## 2. Arquitetura
 
 A aplicação utiliza uma arquitetura de **Monólito Modular (Modular Monolith) combinada com Arquitetura em Camadas (Layered Architecture)**.
 
-O código-fonte está organizado em três módulos principais:
+O backend está organizado em três módulos principais:
 
 - `product` — gerenciamento de produtos.
 - `order` — gerenciamento de pedidos.
@@ -41,6 +43,8 @@ Cada módulo funcional separa suas responsabilidades em:
 - Service
 
 A aplicação utiliza DTOs na fronteira da API REST, evitando a exposição direta das entidades JPA.
+
+O frontend é uma aplicação independente, desenvolvida com HTML, CSS e JavaScript puro (Vanilla JavaScript), organizada em módulos ES. Sua comunicação com o backend ocorre por meio da API REST.
 
 ## 3. Funcionalidades implementadas
 
@@ -64,6 +68,17 @@ A aplicação utiliza DTOs na fronteira da API REST, evitando a exposição dire
 - Preservação dos nomes e preços dos produtos no momento da compra.
 - Consolidação de identificadores repetidos de produtos em uma requisição.
 
+### Frontend
+
+- Catálogo de produtos.
+- Consulta dos detalhes de um produto.
+- Carrinho de compras armazenado no navegador.
+- Atualização de quantidades e remoção de itens do carrinho.
+- Checkout e criação de pedidos.
+- Consulta de pedidos por identificador.
+- Navegação entre páginas por meio de rotas Hash.
+- Integração com a API REST.
+
 ### Tratamento de erros
 
 - Tratamento centralizado de exceções.
@@ -76,12 +91,20 @@ A aplicação utiliza DTOs na fronteira da API REST, evitando a exposição dire
 
 ```text
 cupcake-unicsul/
+├── .mvn/
+│   └── wrapper/
 ├── docs/
 │   └── uml/
 ├── frontend/
 │   ├── assets/
+│   │   └── images/
 │   ├── css/
 │   ├── js/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── utils/
 │   └── index.html
 ├── src/
 │   ├── main/
@@ -90,8 +113,12 @@ cupcake-unicsul/
 │   └── test/
 │       ├── java/
 │       └── resources/
+├── .gitignore
+├── mvnw
+├── mvnw.cmd
 ├── pom.xml
-└── README.md
+├── README.md
+└── LEIAME.md
 ```
 
 ## 5. Pré-requisitos
@@ -99,9 +126,10 @@ cupcake-unicsul/
 Para executar a aplicação localmente, são necessários:
 
 - JDK Java 21.
-- Maven.
 - PostgreSQL.
 - Docker para os testes de integração que utilizam Testcontainers.
+
+O projeto inclui Maven Wrapper, portanto não é necessário ter Maven instalado globalmente.
 
 ## 6. Configuração do banco de dados
 
@@ -120,22 +148,30 @@ export DB_USERNAME=cupcake_user
 export DB_PASSWORD='sua_senha'
 ```
 
+Opcionalmente, é possível informar uma URL de conexão diferente:
+
+```bash
+export DB_URL='jdbc:postgresql://localhost:5432/cupcake'
+```
+
+Quando `DB_URL` não é definida, a aplicação utiliza o endereço padrão.
+
 Crie o banco de dados e configure o usuário PostgreSQL antes de iniciar a aplicação.
 
 O Flyway gerencia automaticamente as migrações pendentes durante a inicialização.
 
 ## 7. Executando a aplicação
 
-Inicie a aplicação utilizando o perfil de desenvolvimento:
+Inicie o backend utilizando o perfil de desenvolvimento:
 
 ```bash
-mvn spring-boot:run -Dspring-boot.run.profiles=dev
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 Como alternativa, gere o arquivo JAR executável:
 
 ```bash
-mvn clean package
+./mvnw clean package
 ```
 
 Execute o artefato gerado:
@@ -145,18 +181,26 @@ java -jar target/cupcake-0.0.1-SNAPSHOT.jar \
     --spring.profiles.active=dev
 ```
 
+O backend estará disponível em:
+
+```text
+http://localhost:8080
+```
+
+O frontend é uma aplicação estática independente e deve ser servido por um servidor HTTP na porta 5500, conforme a configuração CORS do backend.
+
 ## 8. Executando os testes
 
 Execute toda a suíte de testes:
 
 ```bash
-mvn clean test
+./mvnw clean test
 ```
 
 Execute uma classe específica:
 
 ```bash
-mvn test -Dtest=ProductTest
+./mvnw test -Dtest=ProductTest
 ```
 
 Os testes de integração que utilizam Testcontainers exigem que o Docker esteja disponível.
@@ -217,22 +261,20 @@ A implementação atual não contempla:
 - Autenticação ou autorização de usuários.
 - Integração com serviços de pagamento.
 - Upload de imagens.
-- Carrinho de compras persistente.
+- Carrinho de compras persistente no backend.
 - Gerenciamento de status dos pedidos.
 - Cancelamento de pedidos.
-- Implementação do frontend.
 - Verificação da titularidade dos pedidos.
 
 A API não deve ser disponibilizada publicamente sem tratar as limitações de segurança existentes, especialmente o acesso a informações dos clientes pelos endpoints de consulta de pedidos.
 
 ## 12. Projeto acadêmico
 
-Esta aplicação é um projeto acadêmico desenvolvido para aplicar conceitos de Engenharia de Software, incluindo análise de requisitos, modelagem UML, arquitetura de software, projeto de banco de dados, implementação e testes automatizados.
-
+Esta aplicação é um projeto acadêmico desenvolvido para aplicar conceitos de Engenharia de Software, incluindo análise de requisitos, modelagem UML, arquitetura de software, projeto de banco de dados, implementação de backend e frontend e testes automatizados.
 
 ## 👤 Author
 
 **Lussac Prestes Maia**
 
-- GitHub: [@lussac7](https://github.com/lussac7/task-manager)
+- GitHub: [@lussac7](https://github.com/lussac7)
 - LinkedIn: [Lussac P. Maia](https://linkedin.com/in/lussac-maia-eng-software)
